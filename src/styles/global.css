@@ -1,0 +1,4 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, 'Times New Roman', serif; background: #f4f6f9; color: #1c2430; }
+img { max-width: 100%; display: block; }
+button { font-family: inherit; cursor: pointer; }

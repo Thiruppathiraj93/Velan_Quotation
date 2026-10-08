@@ -1,0 +1,14 @@
+.selection { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 24px; text-align: center; }
+.selection-logo { width: 420px; max-width: 80vw; }
+.selection h1 { font-size: 34px; letter-spacing: 2px; }
+.selection p { font-size: 18px; color: #4a5568; }
+.big-btn { padding: 18px 64px; font-size: 22px; letter-spacing: 2px; border: none; border-radius: 10px; background: #b3001b; color: #fff; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.big-btn:hover { background: #8f0016; }
+.capacity-select { padding: 14px 20px; font-size: 18px; border: 2px solid #b3001b; border-radius: 8px; width: min(320px, 90vw); }
+.link-btn { background: none; border: none; color: #b3001b; text-decoration: underline; font-size: 16px; }
+
+@media (max-width: 640px) {
+  .big-btn { width: 100%; padding: 16px 24px; font-size: 18px; }
+  .selection { padding: 20px 16px; }
+  .selection h1 { font-size: 26px; }
+}
