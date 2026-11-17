@@ -1,0 +1,102 @@
+/*
+ * Room quotation preview styling.
+ * Matches the Room Excel templates: Calibri throughout, #002060 title /
+ * item row / bank block, #C00000 underlined description headings,
+ * red bold Transportation / Erection notes where the Excel says so.
+ *
+ * All selectors are prefixed with ".quotation-page.room-page" so they win
+ * over the shared tank styles regardless of CSS load order.
+ */
+
+.quotation-page.room-page {
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+}
+
+/* Excel: "Quotation" = Calibri 12pt bold #002060, centred */
+.quotation-page.room-page .q-title {
+  color: #002060;
+  font-size: 16px;
+  margin: 6px 0 12px;
+}
+
+/* Info block: the Excel info cells are plain bold text (label + value) */
+.quotation-page.room-page .room-info {
+  font-size: 16px;
+}
+.quotation-page.room-page .room-info .q-field {
+  font-weight: bold;
+}
+/* Excel merges the Bill To area over columns A+B (~58 characters) */
+.quotation-page.room-page .room-info-left {
+  width: 55%;
+}
+/* Bill To may contain padding spaces from Excel — keep them visible */
+.quotation-page.room-page .room-info-left .q-val {
+  white-space: pre-wrap;
+}
+
+/* Table: 12pt Calibri with the Excel column proportions
+   (A 5.8 / B 52.2 / C 13.3 / D 6.7 / E 21.8 characters) */
+.quotation-page.room-page .room-table {
+  font-size: 16px;
+}
+.quotation-page.room-page .room-table th,
+.quotation-page.room-page .room-table td {
+  padding: 5px 7px;
+}
+.quotation-page.room-page .room-table th:nth-child(1),
+.quotation-page.room-page .room-table td:nth-child(1) { width: 6%; }
+.quotation-page.room-page .room-table th:nth-child(3),
+.quotation-page.room-page .room-table td:nth-child(3) { width: 13%; }
+.quotation-page.room-page .room-table th:nth-child(4),
+.quotation-page.room-page .room-table td:nth-child(4) { width: 7%; }
+.quotation-page.room-page .room-table th:nth-child(5),
+.quotation-page.room-page .room-table td:nth-child(5) { width: 21%; }
+
+/* Description cell: bold, Excel space runs preserved (pre-wrap) */
+.quotation-page.room-page .room-table .q-desc {
+  white-space: pre-wrap;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+/* Item row: bold #002060 (Excel row 14) */
+.quotation-page.room-page .room-item-row td {
+  color: #002060;
+  font-weight: bold;
+}
+.quotation-page.room-page .room-table .room-item {
+  text-align: left;
+}
+.quotation-page.room-page .room-item .room-item-dims {
+  float: right;
+}
+
+/* Sub Total / GST / Total amounts are bold in Excel (E15-E17) */
+.quotation-page.room-page .room-table .q-sub + td {
+  font-weight: bold;
+}
+
+/* Notes: Calibri 11pt, "Notes:" is regular in Excel */
+.quotation-page.room-page .room-notes {
+  font-size: 15px;
+}
+.quotation-page.room-page .room-notes-title {
+  font-weight: normal;
+}
+.quotation-page.room-page .room-notes li {
+  line-height: 1.35;
+}
+
+/* Bank block: #002060 (bold title, regular lines), padding spaces kept */
+.quotation-page.room-page .room-bank {
+  color: #002060;
+  font-size: 16px;
+}
+.quotation-page.room-page .room-bank .room-bank-title {
+  font-weight: bold;
+}
+.quotation-page.room-page .room-bank div {
+  white-space: pre-wrap;
+}

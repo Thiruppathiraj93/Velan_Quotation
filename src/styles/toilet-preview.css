@@ -1,0 +1,142 @@
+/*
+ * Toilet quotation preview styling.
+ * Matches the Toilet Excel sheets: Times New Roman throughout, the Velan
+ * Concast letterhead image at the top (A1:G7), the bank-details picture at
+ * the bottom (after the notes), thin full-grid table borders and the Excel
+ * column proportions (A 7% / B 47% / C 6% / D 6.5% / E 14.5% / F 19%).
+ *
+ * All selectors are prefixed with ".quotation-page.toilet-page" so they win
+ * over the shared tank styles regardless of CSS load order.
+ */
+
+.quotation-page.toilet-page {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Excel A1:G7 — the Velan Concast letterhead image. The Excel displays it
+   in a 1178x154 px box (stretched wide); the page content is 738px, so the
+   matching box is 738x96. */
+.quotation-page.toilet-page .toilet-header {
+  display: block;
+  width: 100%;
+  height: 96px;
+  margin-bottom: 6px;
+}
+
+/* Info block: "To," + customer lines left; date / quote no / phone right */
+.quotation-page.toilet-page .toilet-info {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.quotation-page.toilet-page .toilet-info-left {
+  width: 58%;
+}
+.quotation-page.toilet-page .toilet-to {
+  font-size: 17px;
+}
+.quotation-page.toilet-page .toilet-billto {
+  white-space: pre-wrap;
+}
+/* Excel types the customer name line in Calibri 18pt and the address lines
+   in Times New Roman 20pt — mirror that split. */
+.quotation-page.toilet-page .toilet-name {
+  font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+}
+.quotation-page.toilet-page .toilet-addr {
+  font-size: 17px;
+}
+.quotation-page.toilet-page .toilet-info-right {
+  width: 40%;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Excel title row: bold, centred, red "(Skelt Only)" tail (pre-wrap keeps
+   the leading / double spaces typed in the Excel cell) */
+.quotation-page.toilet-page .toilet-title {
+  text-align: center;
+  font-size: 19px;
+  font-weight: bold;
+  white-space: pre-wrap;
+  margin: 2px 0 8px;
+}
+
+/* Table: Excel column proportions (A 7% / B 47% / C 6% / D 6.5% /
+   E 14.5% / F 19%). These override the tank column widths that
+   quotation-preview.css sets on .q-table. */
+.quotation-page.toilet-page .toilet-table {
+  font-size: 17px;
+}
+.quotation-page.toilet-page .toilet-table th {
+  font-size: 15.5px;
+}
+.quotation-page.toilet-page .toilet-table th:nth-child(1),
+.quotation-page.toilet-page .toilet-table td:nth-child(1) { width: 7%; }
+.quotation-page.toilet-page .toilet-table th:nth-child(2),
+.quotation-page.toilet-page .toilet-table td:nth-child(2) { width: 47%; }
+.quotation-page.toilet-page .toilet-table th:nth-child(3),
+.quotation-page.toilet-page .toilet-table td:nth-child(3) { width: 6%; }
+.quotation-page.toilet-page .toilet-table th:nth-child(4),
+.quotation-page.toilet-page .toilet-table td:nth-child(4) { width: 6.5%; }
+.quotation-page.toilet-page .toilet-table th:nth-child(5),
+.quotation-page.toilet-page .toilet-table td:nth-child(5) { width: 14.5%; }
+.quotation-page.toilet-page .toilet-table th:nth-child(6),
+.quotation-page.toilet-page .toilet-table td:nth-child(6) { width: 19%; }
+
+/* Item block: title row bold; description cells left aligned */
+.quotation-page.toilet-page .toilet-item-title {
+  font-weight: bold;
+  text-align: left;
+  white-space: pre-wrap;
+}
+.quotation-page.toilet-page .toilet-desc {
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+/* RATE / AMOUNT cells are right aligned (accounting format) */
+.quotation-page.toilet-page .toilet-num {
+  text-align: right;
+}
+
+/* Totals: label centred in its merged span, amount follows the Excel
+   bold flags (Indian sheet bolds Subtotal, both bold the Total) */
+.quotation-page.toilet-page .toilet-total-label {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+.quotation-page.toilet-page .toilet-amount {
+  text-align: right;
+  font-size: 16px;
+}
+
+/* Notes: Excel 20pt text (note 7 in 18pt via inline style), borderless */
+.quotation-page.toilet-page .toilet-notes {
+  margin-top: 8px;
+  font-size: 17px;
+}
+.quotation-page.toilet-page .toilet-notes-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+.quotation-page.toilet-page .toilet-notes ol {
+  padding-left: 28px;
+  margin-left: 0;
+  margin-top: 4px;
+}
+.quotation-page.toilet-page .toilet-notes li {
+  margin-bottom: 5px;
+  line-height: 1.3;
+  white-space: pre-wrap;
+}
+
+/* Excel A34:E40 — the bank-details picture after the notes. The Excel
+   displays it in a 907x211 px box (~80% of the A1:F42 print width). */
+.quotation-page.toilet-page .toilet-bank {
+  display: block;
+  width: 80%;
+  height: 138px;
+  margin-top: 10px;
+}

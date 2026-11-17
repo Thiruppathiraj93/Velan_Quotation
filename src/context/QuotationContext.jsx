@@ -20,6 +20,8 @@ import {
   clearDraft,
 } from '../utils/localStorage';
 import { getTemplates } from '../utils/templateLoader';
+import { getProductConfig } from '../data/products';
+import { deriveCharge } from '../utils/roomCharges';
 
 const QuotationContext = createContext(null);
 
@@ -72,6 +74,28 @@ export function QuotationProvider({ children }) {
 
   const applyTemplate = (t) => {
     setTemplate(t);
+
+    // Room / Toilet quotations use Rate x Nos (no tank capacity inputs).
+    // Transportation / crane charges are editable amount fields prefilled
+    // from the Excel notes (Toilet notes carry no amount, so they start
+    // empty and the original "at client scope" wording is kept).
+    if (t.product === 'Room' || t.product === 'Toilet') {
+      setForm({
+        billTo: t.billTo,
+        shipTo: t.shipTo,
+        quoteNo: t.quoteNo,
+        quoteGivenBy: t.quoteGivenBy || '',
+        quoteDate: todayDisplay(),
+        customerNumber: t.customerNumber,
+        rate: t.rate,
+        nos: t.nos,
+        transportation:
+          deriveCharge(t, ['transportation', 'transport charges'])?.def ?? '',
+        crane: deriveCharge(t, 'crane')?.def ?? '',
+      });
+      return;
+    }
+
     setForm({
       billTo: t.billTo,
       shipTo: t.shipTo,
@@ -102,14 +126,25 @@ export function QuotationProvider({ children }) {
     setForm((f) => ({ ...f, ...patch }));
   };
 
-  const amount = itemAmount(form.qty, form.rate, form.nos);
+  const productConfig = getProductConfig(product);
+
+  // Room: Amount = Rate x Nos. Tanks: Amount = Qty x Rate x Nos.
+  const amount =
+    productConfig?.calcMode === 'rateNos'
+      ? (Number(form.rate) || 0) * (Number(form.nos) || 0)
+      : itemAmount(form.qty, form.rate, form.nos);
   const sub = subTotal([amount]);
   const gstAmt = gst(sub);
   const tot = total(sub, gstAmt);
-  const expiryDate = addDays(form.quoteDate, 10);
+
+  // Water/Septic Tank: expiry = quote date + 10 days. Room: + 20 days.
+  const expiryDate = addDays(form.quoteDate, productConfig?.expiryDays ?? 10);
 
   const capacityDisplayText = useMemo(() => {
     if (!template) return form.capacityText || '';
+
+    // Room templates have no tank capacity token/line.
+    if (!template.capToken) return form.capacityText || '';
 
     const q = Number(form.qty);
     const newCap = template.capToken.includes(',')
@@ -118,11 +153,11 @@ export function QuotationProvider({ children }) {
         : ''
       : String(form.qty);
 
-    return form.capacityText.replace(template.capToken, newCap);
+    return (form.capacityText || '').replace(template.capToken, newCap);
   }, [template, form.capacityText, form.qty]);
 
   const transportLine = useMemo(() => {
-    if (!template) return '';
+    if (!template || !template.transport) return '';
 
     if (form.transportationMode === 'client') {
       return template.transport.isClientScope
@@ -152,7 +187,7 @@ export function QuotationProvider({ children }) {
   }, [template, form.transportation, form.transportationMode]);
 
   const craneLine = useMemo(() => {
-    if (!template) return '';
+    if (!template || !template.crane) return '';
 
     if (form.craneMode === 'client') {
       return template.crane.isClientScope

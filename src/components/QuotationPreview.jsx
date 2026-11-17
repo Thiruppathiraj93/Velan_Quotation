@@ -2,12 +2,25 @@ import React from 'react';
 import { useQuotation } from '../context/QuotationContext';
 import companyDetails from '../data/companyDetails';
 import { toFixed2 } from '../utils/numberFormat';
+import RoomQuotationPreview from './RoomQuotationPreview';
+import ToiletQuotationPreview from './ToiletQuotationPreview';
 
 export default function QuotationPreview() {
   const {
-    template, form, expiryDate, capacityDisplayText,
+    product, template, form, expiryDate, capacityDisplayText,
     amount, sub, gstAmt, tot, transportLine, craneLine,
   } = useQuotation();
+
+  // Room / Toilet use their own Excel-based templates (run-formatted
+  // description and notes). Tanks keep the layout below unchanged.
+  if (product === 'Room') {
+    return <RoomQuotationPreview />;
+  }
+
+  if (product === 'Toilet') {
+    return <ToiletQuotationPreview />;
+  }
+
   if (!template) return null;
 
   const notes = template.notes;
